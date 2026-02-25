@@ -2762,6 +2762,7 @@ VCC
 $40163
 4-bit Sync Bin Counter
 NO
+16
 ~CR
 CLK
 P1
@@ -4156,6 +4157,7 @@ VCC
 1LH1HLG1C1111V
 $74108
 Dual negative-edge-triggered J-K flip-flops with reset
+NO
 14
 1J
 1Q
@@ -11100,6 +11102,7 @@ VCC
 01011LGH011C1V
 $7473
 Dual JK Flip-Flop Clear
+NO
 16
 1CL
 ~1R
@@ -12145,9 +12148,8 @@ LHLHLLGLLLLHHV
 LHLHLLGLHHHLHV
 LHHLLLGLLLLHHV
 $741004
-4 logical elements 2 AND NOT
+hex inverting drivers
 (155-1531)LN8
-six power inverters
 14
 1A
 1Y
@@ -12168,9 +12170,8 @@ LHHLLHGLHHLLHV
 LHLHHLGHLLHHLV
 LHLHLHGHLHLHLV
 $741005
-4 logical elements 2 AND NOT
+hex inverting drivers with open collector
 (155-1531)LN10
-six power inverters
 14
 1A
 1Y
