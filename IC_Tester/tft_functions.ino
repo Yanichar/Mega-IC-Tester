@@ -241,6 +241,7 @@ String getIC()
 
       //Swapping for TFT Rotation 3
       p.x = p.x + p.y; p.y = p.x - p.y; p.x = p.x - p.y;
+      p.y = tft.height() - p.y;
     }
 
     // go thru all the buttons, checking if they were pressed
@@ -302,6 +303,7 @@ String getIC()
           Serial.print("IC no: "); Serial.println(number);
           status = true;
         }
+
         delay(100); // UI debouncing
       }
     }

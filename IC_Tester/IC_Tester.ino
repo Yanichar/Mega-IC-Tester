@@ -4,7 +4,7 @@
 #define MINPRESSURE 150
 #define MAXPRESSURE 1000
 
-const int XP = 8, XM = A2, YP = A3, YM = 9; //ID=0x9341
+const int XP = 6, XM = A2, YP = A1, YM = 7; //ID=0x9341
 const int TS_MINX = 117, TS_MAXX = 897, TS_MINY = 89, TS_MAXY = 898;
 const int TS_LR = 250;
 
@@ -93,6 +93,7 @@ void loop() {
 
     //Swapping for TFT Rotation 3
     p.x = p.x + p.y; p.y = p.x - p.y; p.x = p.x - p.y;
+    p.y = tft.height() - p.y;
 
     delay(10);
 
