@@ -4,7 +4,7 @@
 #define MINPRESSURE 150
 #define MAXPRESSURE 1000
 
-const int XP = 8, XM = A2, YP = A3, YM = 9; //ID=0x9341
+const int XP = 6, XM = A2, YP = A1, YM = 7; //ID=0x9341
 const int TS_MINX = 117, TS_MAXX = 897, TS_MINY = 89, TS_MAXY = 898;
 const int TS_LR = 250;
 
@@ -34,11 +34,11 @@ Adafruit_GFX_Button buttons[12];
 #define fname "database.txt"
 
 //Pin Definitions
-const int pin14[14] = {26, 28, 30, 32, 34, 36, 38, 39, 37, 35, 33, 31, 29, 27};
-const int pin16[16] = {26, 28, 30, 32, 34, 36, 38, 40, 41, 39, 37, 35, 33, 31, 29, 27};
-const int pin18[18] = {26, 28, 30, 32, 34, 36, 38, 40, 42, 43, 41, 39, 37, 35, 33, 31, 29, 27};
-const int pin20[20] = {26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 45, 43, 41, 39, 37, 35, 33, 31, 29, 27};
-const int pin24[24] = {26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 49, 47, 45, 43, 41, 39, 37, 35, 33, 31, 29, 27};
+const int pin14[14] = {16, 18, 20, 22, 24, 26, 28, 29, 27, 25, 23, 21, 19, 17};
+const int pin16[16] = {16, 18, 20, 22, 24, 26, 28, 30, 31, 29, 27, 25, 23, 21, 19, 17};
+const int pin18[18] = {16, 18, 20, 22, 24, 26, 28, 30, 32, 33, 31, 29, 27, 25, 23, 21, 19, 17};
+const int pin20[20] = {16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 35, 33, 31, 29, 27, 25, 23, 21, 19, 17};
+const int pin24[24] = {16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 42, 44, 45, 43, 35, 33, 31, 29, 27, 25, 23, 21, 19, 17};
 String pinname[24] = {"    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    ","    "};
 boolean errpin[24] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 int pinCount = 14;  
@@ -74,10 +74,19 @@ void SD_init()
 
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(2000000);
   digitalWrite(22,LOW);
   tft_init();
   SD_init();
+}
+
+void alternative_loop()
+{
+    simplScreen();
+    SIMPL_init();
+
+    // endless loop inside
+    SIMPL_run();
 }
 
 void loop() {
@@ -93,6 +102,7 @@ void loop() {
 
     //Swapping for TFT Rotation 3
     p.x = p.x + p.y; p.y = p.x - p.y; p.x = p.x - p.y;
+    p.y = tft.height() - p.y;
 
     delay(10);
 
@@ -139,6 +149,15 @@ void loop() {
   digitalWrite(XM, LOW);
   pinMode(YP, OUTPUT);
   digitalWrite(YP, HIGH);
+
+  if (Serial.available() > 0)
+  {
+    byte incomingByte = Serial.read();
+    if (incomingByte == '.')
+    {
+        alternative_loop();
+    }
+  }
 
   // Simple state machine to display the different screens
   // 

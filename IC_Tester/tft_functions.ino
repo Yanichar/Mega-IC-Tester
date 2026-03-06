@@ -42,6 +42,13 @@ void printText(int curX, int curY, int textSize, int textColor, String text)
   tft.println(text);
 }
 
+void simplScreen()
+{
+  tft.fillScreen(BLACK);
+  printText( 100, 75, 5, BLUE, "SIMPL");
+  printText( 25, 120, 5, BLUE, "ACTIVATED");
+}
+
 void startScreen()
 {
   // Draw Start Screen
@@ -49,6 +56,7 @@ void startScreen()
   printText( 25, 35, 5, WHITE, "IC TESTER");
   printText(25, 90, 1, RED, "Idea by Akshay Baweja & Frank Hellmann");
   printText(25,110, 1, WHITE, "Mod by Miochael Gorbachev GVM-Soft'23");
+  printText(25,130, 1, BLUE, "Mod by Ivan Sytnik aka Yanichar");
   printText( 20,220, 2, GREEN,  "Touch anywhere to START");
 }
 
@@ -241,6 +249,7 @@ String getIC()
 
       //Swapping for TFT Rotation 3
       p.x = p.x + p.y; p.y = p.x - p.y; p.x = p.x - p.y;
+      p.y = tft.height() - p.y;
     }
 
     // go thru all the buttons, checking if they were pressed
@@ -302,6 +311,7 @@ String getIC()
           Serial.print("IC no: "); Serial.println(number);
           status = true;
         }
+
         delay(100); // UI debouncing
       }
     }

@@ -48,7 +48,8 @@ boolean testCase(String test, int pins)
   {
     switch (test[i])
     {
-      case 'X' :
+      case 'X' : pinMode(pin[i], INPUT_PULLUP);
+        break;
       case '0' : pinMode(pin[i], OUTPUT); digitalWrite(pin[i], LOW);
         break;
       case '1' : pinMode(pin[i], OUTPUT); digitalWrite(pin[i], HIGH);
