@@ -1,11 +1,53 @@
+from os import name
+
 import serial
 
 from arduino_to_pins import pin40
 from simpl_macros import INPUT_MODE
+import serial.tools.list_ports
 
-COM_PORT = "COM9"
+COM_PORT = "COM11"
 COM_BAUD = 2000000
 
+
+def find_arduino_port():
+    arduino_vid_pid = [
+        (0x1A86, 0x7523),  # Arduino Mega
+    ]
+
+    ports = serial.tools.list_ports.comports()
+    for port in ports:
+        for vid, pid in arduino_vid_pid:
+            if port.vid == vid and port.pid == pid:
+                return port.device
+    return None
+
+def find_by_description():
+    ports = serial.tools.list_ports.comports()
+    for port in ports:
+        if "Arduino" in port.description or "CH340" in port.description:
+            return port.device
+    return None
+
+def find_by_handshake(ports):
+    for port in ports:
+        try:
+            print(f"Probe {port}")
+            ser = serial.Serial(
+                port=port,
+                baudrate=COM_BAUD,
+                bytesize=serial.EIGHTBITS,
+                parity=serial.PARITY_NONE,
+                stopbits=serial.STOPBITS_ONE,
+                timeout=5)
+
+            response = ser.read_until(b"\n")
+            ser.close()
+            if b"Display initialized" in response:
+                return port.device
+        except:
+            continue
+    return None
 
 def check(actual, expected):
     if actual != expected:
@@ -36,6 +78,14 @@ def extract_bits_from_byte(addr):
 
 class TestSimplController:
     def __init__(self):
+
+        port_candidates = set()
+        port_candidates.add(find_arduino_port())
+        port_candidates.add(find_by_description())
+
+        print(port_candidates)
+        print(find_by_handshake(port_candidates))
+
         self._ser = serial.Serial(
             port=COM_PORT,
             baudrate=COM_BAUD,
@@ -44,6 +94,7 @@ class TestSimplController:
             stopbits=serial.STOPBITS_ONE,
             timeout=0.1,
         )
+
         self.try_activate_controller()
 
     def try_activate_controller(self):
