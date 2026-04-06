@@ -2,7 +2,7 @@ IC Tester for the classic CMOS and TLL ICs with Touch Display
 
 It will be very useful who collects clones and analogues of the Zx Spectrum and similar vintage consoles)))
 
-based code on Frank Hellmann, 2019 http://www.gotohellmann.com/ & original idea Akshay Bawejas http://www.akshaybaweja.com/ https://github.com/akshaybaweja/Smart-IC-Tester
+based code on Frank Hellmann, 2019 http://www.gotohellmann.com/ & original idea Akshay Bawejas http://www.akshaybaweja.com/ https://github.com/akshaybaweja/Smart-IC-Tester,
 Gorby75 https://github.com/Gorby75/Mega-IC-Tester
 and SIMPL implementation by Ken Boak https://github.com/monsonite/SIMPL
 
@@ -47,6 +47,7 @@ https://t.me/ulitka_garry
 ## Setting Up and Programming
 Assembly Arduino and display, install all libraries and use Example->MCUFRIEND_kbv->diagnose_Touchpins to find out which
 pins are connected to touch in you're display
+
 Update IC_Tester.ino: 
 ```C++
 const int XP = 6, XM = A2, YP = A1, YM = 7; //ID=0x9341`
