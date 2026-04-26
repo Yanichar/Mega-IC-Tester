@@ -27,30 +27,30 @@ from simpl_macros import OUTPUT_MODE, INPUT_PULLUP_MODE, INPUT_MODE
 MEM_SIZE = 2048  # 2К x 8 бит
 
 pins = [
-    "A7",    # 1
-    "A6",    # 2
-    "A5",    # 3
-    "A4",    # 4
-    "A3",    # 5
-    "A2",    # 6
-    "A1",    # 7
-    "A0",    # 8
-    "D0",    # 9
-    "D1",    # 10
-    "D2",    # 11
-    "GND",   # 12
-    "D3",    # 13
-    "D4",    # 14
-    "D5",    # 15
-    "D6",    # 16
-    "D7",    # 17
-    "CE",    # 18 - Chip Enable (активный низкий)
-    "A10",   # 19
-    "OE",    # 20 - Output Enable (активный низкий)
-    "WE",    # 21 - Write Enable (активный низкий)
-    "A9",    # 22
-    "A8",    # 23
-    "VCC",   # 24
+    "A3",  # 1
+    "A6",  # 2
+    "A5",  # 3
+    "A4",  # 4
+    "A7",  # 5
+    "A8",  # 6
+    "A9",  # 7
+    "A10",  # 8
+    "D0",  # 9
+    "D1",  # 10
+    "D2",  # 11
+    "GND",  # 12
+    "D3",  # 13
+    "D4",  # 14
+    "D5",  # 15
+    "D6",  # 16
+    "D7",  # 17
+    "CE",  # 18 - Chip Enable (активный низкий)
+    "A0",  # 19
+    "OE",  # 20 - Output Enable (активный низкий)
+    "WE",  # 21 - Write Enable (активный низкий)
+    "A1",  # 22
+    "A2",  # 23
+    "VCC",  # 24
 ]
 
 VCC_PIN = pin24[pins.index("VCC")]
@@ -186,8 +186,6 @@ class TestK537RU10(TestSimplController):
         )
 
     def __del__(self):
-        super().__del__()
-        # Перевести все пины в безопасное состояние (входы)
         self.send_command(
             f"{CE_PIN}d{INPUT_MODE}"
             f"{OE_PIN}d{INPUT_MODE}"
@@ -258,7 +256,7 @@ if __name__ == "__main__":
             uc.send_command(
                 f"{CE_PIN}d0o"
                 f"{WE_PIN}d0o"
-                f"10n"          # импульс записи ~10 мкс
+                f"10n"  # импульс записи ~10 мкс
                 f"{WE_PIN}d1o"
                 f"{CE_PIN}d1o"
             )
@@ -276,7 +274,7 @@ if __name__ == "__main__":
             result = uc.send_command(
                 f"{CE_PIN}d0o"
                 f"{OE_PIN}d0o"
-                f"1u"
+                f"100u"
                 f"{D0_PIN}diq"
                 f"{D1_PIN}diq"
                 f"{D2_PIN}diq"
