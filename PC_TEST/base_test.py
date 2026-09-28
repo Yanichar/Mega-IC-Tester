@@ -86,12 +86,17 @@ class TestSimplController:
         port_candidates = set()
         port_candidates.add(find_arduino_port())
         port_candidates.add(find_by_description())
+        port_candidates.discard(None)
 
         print(port_candidates)
-        print(find_by_handshake(port_candidates))
+        detected = find_by_handshake(sorted(port_candidates))
+        print(detected)
+
+        port = detected or (sorted(port_candidates)[0] if port_candidates else COM_PORT)
+        print(f"Using port {port}")
 
         self._ser = serial.Serial(
-            port=COM_PORT,
+            port=port,
             baudrate=COM_BAUD,
             bytesize=serial.EIGHTBITS,
             parity=serial.PARITY_NONE,
@@ -131,6 +136,9 @@ class TestSimplController:
 
     def __del__(self):
         print("Test socket set to safe state")
+        if getattr(self, "_ser", None) is None:
+            return
+
         cmd = ""
         for pin in pin40:
             cmd += f"{pin}d{INPUT_MODE}"
