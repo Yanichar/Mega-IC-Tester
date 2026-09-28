@@ -6,7 +6,7 @@ from arduino_to_pins import pin40
 from simpl_macros import INPUT_MODE
 import serial.tools.list_ports
 
-COM_PORT = "COM11"
+COM_PORT = "COM9"
 COM_BAUD = 2000000
 
 
@@ -22,12 +22,14 @@ def find_arduino_port():
                 return port.device
     return None
 
+
 def find_by_description():
     ports = serial.tools.list_ports.comports()
     for port in ports:
         if "Arduino" in port.description or "CH340" in port.description:
             return port.device
     return None
+
 
 def find_by_handshake(ports):
     for port in ports:
@@ -39,7 +41,8 @@ def find_by_handshake(ports):
                 bytesize=serial.EIGHTBITS,
                 parity=serial.PARITY_NONE,
                 stopbits=serial.STOPBITS_ONE,
-                timeout=5)
+                timeout=5,
+            )
 
             response = ser.read_until(b"\n")
             ser.close()
@@ -48,6 +51,7 @@ def find_by_handshake(ports):
         except:
             continue
     return None
+
 
 def check(actual, expected):
     if actual != expected:
