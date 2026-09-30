@@ -6,7 +6,7 @@ from arduino_to_pins import pin40
 from simpl_macros import INPUT_MODE
 import serial.tools.list_ports
 
-COM_PORT = "COM9"
+COM_PORT = "COM11"
 COM_BAUD = 2000000
 
 
